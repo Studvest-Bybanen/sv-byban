@@ -11,24 +11,18 @@
 	</head>
 	<body>
 		<div class="box-cont">
-            <div id="onboard-btn">KLAR?</div>
+            <div id="onboard-btn">
+				<a href="/onboarding">
+					START
+				</a>
+			</div>
 
 			
-		</div>
-		<div class="go">
-			<span>GÅ!</span>
 		</div>
 	</body>
 
 </html>
 <script>
-setTimeout(() => {
-	document.getElementById("onboard-btn").innerHTML = "FERDIG?"
-}, 1000);
-
-setTimeout(() => {
-	document.querySelector(".go")!.setAttribute("style", "display: flex;");
-}, 2000);
 </script>
 <style>
 body {
@@ -41,6 +35,12 @@ body {
 	padding: 0;
 	/* background-color: black; */
 }
+
+a {
+	color: white;
+	text-decoration: none;
+}
+
 div.box-cont {
 	border: 2px solid black;
 	width: 50%;
@@ -60,19 +60,4 @@ div#onboard-btn {
 	font-size: 2rem;
 }
 
-div.go {
-	display: none;
-	position: absolute;
-	height: 100vh;
-	width: 100%;
-	background-color: orangered;
-	/* display: flex; */
-	align-items: center;
-	justify-content: center;
-
-	span {
-		font-size: 4rem;
-		color: white;
-	}
-}
 </style>

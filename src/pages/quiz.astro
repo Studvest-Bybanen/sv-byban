@@ -1,0 +1,100 @@
+---
+
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+	</head>
+	<body>
+		<div class="box-cont">
+            <div class="quiz-cont">
+                <h2>How can we motivate Ole?</h2>
+                <ul>
+                    <li>juice</li>
+                    <li>fresh juice</li>
+                    <li>pizza</li>
+                </ul>
+            </div>
+
+            <div class="quiz-cont">
+                <h2>How can we motivate Aggi?</h2>
+                <ul>
+                    <li>dsad</li>
+                    <li>fresh juice</li>
+                    <li>pizza</li>
+                </ul>
+            </div>
+		</div>
+	</body>
+
+</html>
+<script>
+function correct() {
+    
+}
+</script>
+<style>
+body {
+	height: 100vh;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 0;
+	/* background-color: black; */
+}
+
+/* a {
+	color: white;
+	text-decoration: none;
+} */
+
+
+
+div.box-cont {
+	border: 2px solid black;
+	width: 50%;
+	height: 80%;
+	position: relative;
+}
+
+div.quiz-cont {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    border: 2px solid;
+    width: 70%;
+    margin: auto;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding-bottom: 2rem;
+    h2 {
+        padding-left: 2rem;
+    }
+    ul {
+        padding: 0;
+        list-style-type: none;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        margin: auto;
+        width: 70%;
+
+        li {
+            border: 2px solid rgba(0, 0, 0, 0.5);
+            padding: 0.5rem 1rem;
+        }
+    }
+}
+
+div.quiz-cont:nth-of-type(2) {
+    left: 150%;
+}
+</style>
