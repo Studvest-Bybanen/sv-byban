@@ -24,11 +24,16 @@
 <script>
 setTimeout(() => {
 	document.getElementById("onboard-btn").innerHTML = "FERDIG?"
-}, 1000);
+}, 1500);
 
 setTimeout(() => {
 	document.querySelector(".go")!.setAttribute("style", "display: flex;");
-}, 2000);
+}, 3000);
+
+setTimeout(() => {
+	window.location.href = '/quiz';
+}, 4500);
+
 </script>
 <style>
 body {
