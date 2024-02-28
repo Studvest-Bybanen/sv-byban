@@ -46,16 +46,16 @@
                 <h2>How can we motivate Aggi?</h2>
                 <ul>
                     <li>dsad</li>
-                    <li>fresh juice</li>
-                    <li  id="correct-3">pizza</li>
+                    <li id="correct-3">fresh juice</li>
+                    <li>pizza</li>
                 </ul>
             </div>
 
             <div class="quiz-cont" id="question-4">
                 <h2>How can we motivate Aggi?</h2>
                 <ul>
-                    <li  id="correct-4">dsad</li>
-                    <li>fresh juice</li>
+                    <li>dsad</li>
+                    <li id="correct-4">fresh juice</li>
                     <li>pizza</li>
                 </ul>
             </div>
@@ -64,8 +64,8 @@
                 <h2>How can we motivate Aggi?</h2>
                 <ul>
                     <li>dsad</li>
-                    <li>fresh juice</li>
-                    <li id="correct-5">pizza</li>
+                    <li id="correct-5">fresh juice</li>
+                    <li>pizza</li>
                 </ul>
             </div>
 
@@ -108,9 +108,7 @@ let quizzes = [
     }
 ]
 
-quizzes.map(quiz => 
-    console.log(quiz)
-);
+
     let score = 0;
     let quizScore = document.getElementById("quiz-score");
     let question1 = document.getElementById("question-1");
@@ -129,8 +127,21 @@ quizzes.map(quiz =>
     let correct3 = document.getElementById("correct-3");
     let correct4 = document.getElementById("correct-4");
     let correct5 = document.getElementById("correct-5");
+    let incorrect = document.querySelectorAll("li");
 
-    // console.log(ulEl)
+    incorrect.forEach(item => {
+        item.addEventListener("click", () => {
+            item!.setAttribute("style", "border: 2px solid red;");
+            progress1!.setAttribute("style", "background-color: red;");
+            score++;
+
+            setTimeout(() => {
+                question1!.setAttribute("style", "left: -100%;");
+                question2!.setAttribute("style", "left: 50%;");
+            }, 2000);
+        });
+    });
+
 
     correct1?.addEventListener("click", ()=> {
         correct1!.setAttribute("style", "border: 2px solid green;");
