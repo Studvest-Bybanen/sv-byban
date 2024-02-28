@@ -20,6 +20,7 @@
         <link rel="stylesheet" href="styles.css">
     </head>
 	<body>
+        <img class="bg-byban" src="../../svg/bybane.svg" alt="">
 		<div class="box-cont">
             <div class="quiz-cont" id="question-1">
                 <h2>How can we motivate Ole?</h2>
@@ -68,6 +69,11 @@
                 </ul>
             </div>
 
+            <div class="quiz-cont" id="question-6">
+                <h2>Score</h2>
+                <div id="quiz-score">5 / 5</div>
+            </div>
+
             <div class="progress-bar">
                 <ul>
                     <li id="progress-1"></li>
@@ -83,6 +89,7 @@
 </html>
 
 <script>
+
 let quizzes = [
     { 
         "question": "How can we motivate Ole?",
@@ -104,12 +111,14 @@ let quizzes = [
 quizzes.map(quiz => 
     console.log(quiz)
 );
-    
+    let score = 0;
+    let quizScore = document.getElementById("quiz-score");
     let question1 = document.getElementById("question-1");
     let question2 = document.getElementById("question-2");
     let question3 = document.getElementById("question-3");
     let question4 = document.getElementById("question-4");
     let question5 = document.getElementById("question-5");
+    let question6 = document.getElementById("question-6");
     let progress1 = document.getElementById("progress-1");
     let progress2 = document.getElementById("progress-2");
     let progress3 = document.getElementById("progress-3");
@@ -126,6 +135,7 @@ quizzes.map(quiz =>
     correct1?.addEventListener("click", ()=> {
         correct1!.setAttribute("style", "border: 2px solid green;");
         progress1!.setAttribute("style", "background-color: green;");
+        score++;
 
         setTimeout(() => {
             question1!.setAttribute("style", "left: -100%;");
@@ -138,6 +148,7 @@ quizzes.map(quiz =>
     correct2?.addEventListener("click", ()=> {
         correct2!.setAttribute("style", "border: 2px solid green;");
         progress2!.setAttribute("style", "background-color: green;");
+        score++;
 
         setTimeout(() => {
             question2!.setAttribute("style", "left: -100%;");
@@ -148,6 +159,7 @@ quizzes.map(quiz =>
     correct3?.addEventListener("click", ()=> {
         correct3!.setAttribute("style", "border: 2px solid green;");
         progress3!.setAttribute("style", "background-color: green;");
+        score++;
 
         setTimeout(() => {
             question3!.setAttribute("style", "left: -100%;");
@@ -158,6 +170,7 @@ quizzes.map(quiz =>
     correct4?.addEventListener("click", ()=> {
         correct4!.setAttribute("style", "border: 2px solid green;");
         progress4!.setAttribute("style", "background-color: green;");
+        score++;
 
         setTimeout(() => {
             question4!.setAttribute("style", "left: -100%;");
@@ -168,10 +181,12 @@ quizzes.map(quiz =>
     correct5?.addEventListener("click", ()=> {
         correct5!.setAttribute("style", "border: 2px solid green;");
         progress5!.setAttribute("style", "background-color: green;");
+        score++;
+        quizScore.innerHTML = score + " / 5";
 
         setTimeout(() => {
             question5!.setAttribute("style", "left: -100%;");
-            // question3!.setAttribute("style", "left: 50%;");
+            question6!.setAttribute("style", "left: 50%;");
         }, 2000);
     })
     
@@ -198,6 +213,10 @@ body {
 	/* background-color: black; */
 }
 
+.bg-byban {
+    position: absolute;
+    z-index: -10;
+}
 /* a {
 	color: white;
 	text-decoration: none;
@@ -231,6 +250,11 @@ div.quiz-cont {
     h2 {
         padding-left: 2rem;
     }
+
+    #quiz-score {
+        margin: auto;
+        font-size: 4rem;
+    }
     ul {
         padding: 0;
         list-style-type: none;
@@ -246,6 +270,7 @@ div.quiz-cont {
             padding: 1rem 2rem;
             border-radius: 2rem;
             font-size: 1.25rem;
+            cursor: pointer;
 
             button {
                 /* padding: 0.5rem 1rem; */
@@ -283,7 +308,7 @@ div.progress-bar {
             padding: 0.5rem 1rem; */
             height: 2rem;
             width: 2rem;
-            border: 2px solid rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.5);
             /* background-color: maroon; */
             /* background-color: yellow; */
             border-radius: 50%;
