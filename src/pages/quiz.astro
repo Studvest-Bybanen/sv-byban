@@ -17,17 +17,16 @@
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-	</head>
+        <link rel="stylesheet" href="styles.css">
+    </head>
 	<body>
 		<div class="box-cont">
             <div class="quiz-cont" id="question-1">
                 <h2>How can we motivate Ole?</h2>
                 <ul>
                     <li>juice</li>
-                    <li>
-                        <button>
-                            meny fresh juice
-                        </button>
+                    <li id="correct-1">
+                        meny fresh juice
                     </li>
                     <li>pizza</li>
                 </ul>
@@ -37,8 +36,35 @@
                 <h2>How can we motivate Aggi?</h2>
                 <ul>
                     <li>dsad</li>
+                    <li id="correct-2">fresh juice</li>
+                    <li>pizza</li>
+                </ul>
+            </div>
+
+            <div class="quiz-cont" id="question-3">
+                <h2>How can we motivate Aggi?</h2>
+                <ul>
+                    <li>dsad</li>
+                    <li>fresh juice</li>
+                    <li  id="correct-3">pizza</li>
+                </ul>
+            </div>
+
+            <div class="quiz-cont" id="question-4">
+                <h2>How can we motivate Aggi?</h2>
+                <ul>
+                    <li  id="correct-4">dsad</li>
                     <li>fresh juice</li>
                     <li>pizza</li>
+                </ul>
+            </div>
+
+            <div class="quiz-cont" id="question-5">
+                <h2>How can we motivate Aggi?</h2>
+                <ul>
+                    <li>dsad</li>
+                    <li>fresh juice</li>
+                    <li id="correct-5">pizza</li>
                 </ul>
             </div>
 
@@ -46,6 +72,9 @@
                 <ul>
                     <li id="progress-1"></li>
                     <li id="progress-2"></li>
+                    <li id="progress-3"></li>
+                    <li id="progress-4"></li>
+                    <li id="progress-5"></li>
                 </ul>
             </div>
 		</div>
@@ -75,17 +104,27 @@ let quizzes = [
 quizzes.map(quiz => 
     console.log(quiz)
 );
-    // console.log(quiz)
+    
     let question1 = document.getElementById("question-1");
     let question2 = document.getElementById("question-2");
+    let question3 = document.getElementById("question-3");
+    let question4 = document.getElementById("question-4");
+    let question5 = document.getElementById("question-5");
     let progress1 = document.getElementById("progress-1");
     let progress2 = document.getElementById("progress-2");
-    let ulEl = document.querySelector("li:nth-of-type(2)");
+    let progress3 = document.getElementById("progress-3");
+    let progress4 = document.getElementById("progress-4");
+    let progress5 = document.getElementById("progress-5");
+    let correct1 = document.getElementById("correct-1");
+    let correct2 = document.getElementById("correct-2");
+    let correct3 = document.getElementById("correct-3");
+    let correct4 = document.getElementById("correct-4");
+    let correct5 = document.getElementById("correct-5");
 
-    console.log(ulEl)
+    // console.log(ulEl)
 
-    ulEl?.addEventListener("click", ()=> {
-        ulEl!.setAttribute("style", "border: 2px solid green;");
+    correct1?.addEventListener("click", ()=> {
+        correct1!.setAttribute("style", "border: 2px solid green;");
         progress1!.setAttribute("style", "background-color: green;");
 
         setTimeout(() => {
@@ -94,13 +133,45 @@ quizzes.map(quiz =>
         }, 2000);
     })
 
-    ulEl?.addEventListener("click", ()=> {
-        ulEl!.setAttribute("style", "border: 2px solid green;");
-        progress1!.setAttribute("style", "background-color: green;");
+    // console.log(ulEl)
+
+    correct2?.addEventListener("click", ()=> {
+        correct2!.setAttribute("style", "border: 2px solid green;");
+        progress2!.setAttribute("style", "background-color: green;");
 
         setTimeout(() => {
-            question1!.setAttribute("style", "left: -100%;");
-            question2!.setAttribute("style", "left: 50%;");
+            question2!.setAttribute("style", "left: -100%;");
+            question3!.setAttribute("style", "left: 50%;");
+        }, 2000);
+    })
+
+    correct3?.addEventListener("click", ()=> {
+        correct3!.setAttribute("style", "border: 2px solid green;");
+        progress3!.setAttribute("style", "background-color: green;");
+
+        setTimeout(() => {
+            question3!.setAttribute("style", "left: -100%;");
+            question4!.setAttribute("style", "left: 50%;");
+        }, 2000);
+    })
+
+    correct4?.addEventListener("click", ()=> {
+        correct4!.setAttribute("style", "border: 2px solid green;");
+        progress4!.setAttribute("style", "background-color: green;");
+
+        setTimeout(() => {
+            question4!.setAttribute("style", "left: -100%;");
+            question5!.setAttribute("style", "left: 50%;");
+        }, 2000);
+    })
+
+    correct5?.addEventListener("click", ()=> {
+        correct5!.setAttribute("style", "border: 2px solid green;");
+        progress5!.setAttribute("style", "background-color: green;");
+
+        setTimeout(() => {
+            question5!.setAttribute("style", "left: -100%;");
+            // question3!.setAttribute("style", "left: 50%;");
         }, 2000);
     })
     
@@ -142,17 +213,21 @@ div.box-cont {
 }
 
 div.quiz-cont {
+    height: 18rem;
+    width: 26.6rem;
     display: flex;
+    padding: 2rem 5rem 5rem 5rem;
     flex-direction: column;
-    /* align-items: center; */
-    border: 2px solid;
-    width: 70%;
-    margin: auto;
+    align-items: flex-start;
+    gap: 0.5rem;
+    border-radius: 1rem;
+    border: 1px solid #DCDBDB;
+    background: #FFF;
+    box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.25);
     position: absolute;
-    top: 40%;
+    top: 30%;
     left: 50%;
     transform: translateX(-50%);
-    padding-bottom: 2rem;
     h2 {
         padding-left: 2rem;
     }
@@ -161,18 +236,22 @@ div.quiz-cont {
         list-style-type: none;
         display: flex;
         flex-direction: column;
-        gap: 2rem;
+        gap: 1rem;
         margin: auto;
-        width: 70%;
+        width: 85%;
 
         li {
-            border: 2px solid rgba(0, 0, 0, 0.5);
-            padding: 0.5rem 1rem;
-            cursor: pointer;
+            background: #f1f1f1;
+            border: 0;
+            padding: 1rem 2rem;
+            border-radius: 2rem;
+            font-size: 1.25rem;
 
             button {
                 /* padding: 0.5rem 1rem; */
                 /* width: 100%; */
+
+                font-size: 1.25rem;
                 cursor: pointer;
                 border: 0;
                 background-color: transparent;
@@ -182,13 +261,14 @@ div.quiz-cont {
     }
 }
 
-div.quiz-cont:nth-of-type(2) {
+div.quiz-cont:not(:first-child) {
     left: 200%;
 }
 
 div.progress-bar {
     position: absolute;
-    top: 85%;
+    /* top: 97%; */
+    bottom: -5%;
     left: 50%;
     transform: translateX(-50%);
 
