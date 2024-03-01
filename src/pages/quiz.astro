@@ -1,14 +1,4 @@
 ---
-// let quiz = [
-//     {
-//         questiopn: 2hjkashjakhfd,
-//         ansewrs {
-//             {}
-//         },
-//         correct
-//     }
-// ]
-
 ---
 
 <html lang="en">
@@ -22,65 +12,13 @@
 	<body>
         <img class="bg-byban" src="../../svg/bybane.svg" alt="">
 		<div class="box-cont">
-            <div class="quiz-cont" id="question-1">
-                <h2>How can we motivate Ole?</h2>
-                <ul>
-                    <li>juice</li>
-                    <li id="correct-1">
-                        meny fresh juice
-                    </li>
-                    <li>pizza</li>
-                </ul>
-            </div>
-
-            <div class="quiz-cont" id="question-2">
-                <h2>How can we motivate Aggi?</h2>
-                <ul>
-                    <li>dsad</li>
-                    <li id="correct-2">fresh juice</li>
-                    <li>pizza</li>
-                </ul>
-            </div>
-
-            <div class="quiz-cont" id="question-3">
-                <h2>How can we motivate Aggi?</h2>
-                <ul>
-                    <li>dsad</li>
-                    <li id="correct-3">fresh juice</li>
-                    <li>pizza</li>
-                </ul>
-            </div>
-
-            <div class="quiz-cont" id="question-4">
-                <h2>How can we motivate Aggi?</h2>
-                <ul>
-                    <li>dsad</li>
-                    <li id="correct-4">fresh juice</li>
-                    <li>pizza</li>
-                </ul>
-            </div>
-
-            <div class="quiz-cont" id="question-5">
-                <h2>How can we motivate Aggi?</h2>
-                <ul>
-                    <li>dsad</li>
-                    <li id="correct-5">fresh juice</li>
-                    <li>pizza</li>
-                </ul>
-            </div>
-
-            <div class="quiz-cont" id="question-6">
+            <div class="quiz-cont" id="scoreboard">
                 <h2>Score</h2>
-                <div id="quiz-score">5 / 5</div>
+                <span id="score"></span>
+                <button onclick="playAgain();">Play again!</button>
             </div>
-
             <div class="progress-bar">
-                <ul>
-                    <li id="progress-1"></li>
-                    <li id="progress-2"></li>
-                    <li id="progress-3"></li>
-                    <li id="progress-4"></li>
-                    <li id="progress-5"></li>
+                <ul class="progress-bar-ul">
                 </ul>
             </div>
 		</div>
@@ -88,7 +26,7 @@
 
 </html>
 
-<script>
+<script is:inline>
 
 let quizzes = [
     { 
@@ -108,108 +46,86 @@ let quizzes = [
     }
 ]
 
+let mainContEl = document.querySelector(".box-cont");
+quizzes.map((quiz, index) => {
+    let renderEl = `
+        <div class="quiz-cont" id="question-${index}">
+            <h2>${quiz.question}</h2>
+            <ul>
+                ${quiz.answers.map((answer, answerIndex) => {
+                    return `<li id="choice-${index}${answerIndex}" onclick="handleAnswerChoice(${answerIndex}, ${index});">${answer}</li>`; // Added return statement here
+                }).join("")} <!-- Use join("") to convert the array to a string -->
+            </ul>
+        </div>
+    `;
+    
+
+    // renderEl.classList.add('quiz-cont')
+    mainContEl.innerHTML += renderEl;
+});
+
+// render the progress bars
+let mainProgressContEl = document.querySelector(".progress-bar-ul");
+quizzes.map((quiz, index) => {
+    let progressEl = `<li id="progress-${index}"></li>`
+
+    mainProgressContEl.innerHTML += progressEl;
+})
+
 
     let score = 0;
-    let quizScore = document.getElementById("quiz-score");
-    let question1 = document.getElementById("question-1");
-    let question2 = document.getElementById("question-2");
-    let question3 = document.getElementById("question-3");
-    let question4 = document.getElementById("question-4");
-    let question5 = document.getElementById("question-5");
-    let question6 = document.getElementById("question-6");
-    let progress1 = document.getElementById("progress-1");
-    let progress2 = document.getElementById("progress-2");
-    let progress3 = document.getElementById("progress-3");
-    let progress4 = document.getElementById("progress-4");
-    let progress5 = document.getElementById("progress-5");
-    let correct1 = document.getElementById("correct-1");
-    let correct2 = document.getElementById("correct-2");
-    let correct3 = document.getElementById("correct-3");
-    let correct4 = document.getElementById("correct-4");
-    let correct5 = document.getElementById("correct-5");
-    let incorrect = document.querySelectorAll("li");
+    let answeredQuestions = 0;
 
-    incorrect.forEach(item => {
-        item.addEventListener("click", () => {
-            item!.setAttribute("style", "border: 2px solid red;");
-            progress1!.setAttribute("style", "background-color: red;");
+    function checkCorrectAnswer(mainElementIDOrClass, elementIDOrClass, correctAnswer) {
+        let htmlElement = document.querySelector("#choice-" + mainElementIDOrClass + elementIDOrClass);
+        // console.log(htmlElement.innerHTML == correctAnswer)
+        return htmlElement.innerHTML == correctAnswer;
+    }
+
+    function handleAnswerChoice(elementIDOrClass, mainElementIDOrClass) {
+        // mainElementIDOrClass = parseInt(mainElementIDOrClass);
+        let correctAnswer = quizzes[mainElementIDOrClass].correct;
+        let isCorrect = checkCorrectAnswer(mainElementIDOrClass, elementIDOrClass, correctAnswer);
+        let currentEl = document.querySelector("#question-" + mainElementIDOrClass);
+        let nextEl = document.querySelector("#question-" + (parseInt(mainElementIDOrClass) + 1));
+        // console.log("#question-" + (parseInt(mainElementIDOrClass) + 1))
+        let choiceEl = document.querySelector("#choice-" + mainElementIDOrClass + elementIDOrClass);
+        let progressEl = document.querySelector("#progress-" + mainElementIDOrClass);
+        
+        answeredQuestions++;
+
+        if (isCorrect) {
             score++;
-
-            setTimeout(() => {
-                question1!.setAttribute("style", "left: -100%;");
-                question2!.setAttribute("style", "left: 50%;");
-            }, 2000);
-        });
-    });
-
-
-    correct1?.addEventListener("click", ()=> {
-        correct1!.setAttribute("style", "border: 2px solid green;");
-        progress1!.setAttribute("style", "background-color: green;");
-        score++;
+            progressEl.setAttribute("style", "background-color: green;");
+            choiceEl.setAttribute("style", "border: 2px solid green;");
+        } else {
+            progressEl.setAttribute("style", "background-color: red;");
+            choiceEl.setAttribute("style", "border: 2px solid red;");
+        }
 
         setTimeout(() => {
-            question1!.setAttribute("style", "left: -100%;");
-            question2!.setAttribute("style", "left: 50%;");
+            console.log(answeredQuestions)
+            // currentEl.setAttribute("style", "left: -100%;");
+            currentEl.setAttribute("style", "left: -100%;");
+            if (nextEl) {
+                nextEl.setAttribute("style", "left: 50%;");
+            } else {
+                // checkIsGameEnd();
+                let scoreboardEl = document.getElementById("scoreboard");
+                let scoreEl = document.getElementById("score");
+
+                scoreEl.innerHTML = `${score} / ${quizzes.length}`;
+                scoreboardEl.setAttribute("style", "left: 50%;");
+            }
         }, 2000);
-    })
 
-    // console.log(ulEl)
+    }
 
-    correct2?.addEventListener("click", ()=> {
-        correct2!.setAttribute("style", "border: 2px solid green;");
-        progress2!.setAttribute("style", "background-color: green;");
-        score++;
-
-        setTimeout(() => {
-            question2!.setAttribute("style", "left: -100%;");
-            question3!.setAttribute("style", "left: 50%;");
-        }, 2000);
-    })
-
-    correct3?.addEventListener("click", ()=> {
-        correct3!.setAttribute("style", "border: 2px solid green;");
-        progress3!.setAttribute("style", "background-color: green;");
-        score++;
-
-        setTimeout(() => {
-            question3!.setAttribute("style", "left: -100%;");
-            question4!.setAttribute("style", "left: 50%;");
-        }, 2000);
-    })
-
-    correct4?.addEventListener("click", ()=> {
-        correct4!.setAttribute("style", "border: 2px solid green;");
-        progress4!.setAttribute("style", "background-color: green;");
-        score++;
-
-        setTimeout(() => {
-            question4!.setAttribute("style", "left: -100%;");
-            question5!.setAttribute("style", "left: 50%;");
-        }, 2000);
-    })
-
-    correct5?.addEventListener("click", ()=> {
-        correct5!.setAttribute("style", "border: 2px solid green;");
-        progress5!.setAttribute("style", "background-color: green;");
-        score++;
-        quizScore.innerHTML = score + " / 5";
-
-        setTimeout(() => {
-            question5!.setAttribute("style", "left: -100%;");
-            question6!.setAttribute("style", "left: 50%;");
-        }, 2000);
-    })
-    
-
-
-// function correct() {
-//     let question2 = document.getElementById("question-2");
-
-    
-// }
+    function playAgain() {
+        location.reload();
+    }
 </script>
-<style>
+<style is:inline>
 * {
     transition-duration: 1s;
 }
@@ -242,7 +158,7 @@ div.box-cont {
 	position: relative;
 }
 
-div.quiz-cont {
+.quiz-cont {
     height: 18rem;
     width: 26.6rem;
     display: flex;
@@ -276,6 +192,7 @@ div.quiz-cont {
         width: 85%;
 
         li {
+            transition-duration: 0s;
             background: #f1f1f1;
             border: 0;
             padding: 1rem 2rem;
@@ -297,8 +214,12 @@ div.quiz-cont {
     }
 }
 
-div.quiz-cont:not(:first-child) {
+div.quiz-cont {
     left: 200%;
+}
+
+#question-0 {
+    left: 50%;
 }
 
 div.progress-bar {
@@ -325,6 +246,26 @@ div.progress-bar {
             border-radius: 50%;
         }
 
+    }
+}
+
+div#scoreboard {
+    #score {
+        font-size: 3rem;
+        margin: auto;
+    }
+
+    button {
+        cursor: pointer;
+        width: 50%;
+        margin: 1rem auto 0 auto;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        background-color: maroon;
+        color: white;
+        border: 0;
+        border-radius: 20px;
+        font-size: 1.5rem;
     }
 }
 </style>
