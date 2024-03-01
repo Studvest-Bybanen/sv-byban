@@ -8,6 +8,7 @@
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
         <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="/styles/fireworks.css">
     </head>
 	<body>
         <img class="bg-byban" src="../../svg/bybane.svg" alt="">
@@ -22,11 +23,24 @@
                 </ul>
             </div>
 		</div>
+
+        <div class="fireworks">
+            <div class="before"></div>
+            <div class="after"></div>
+        </div>
 	</body>
 
 </html>
 
 <script is:inline>
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+    }
+    return array;
+}
+
 let quizzes = [
     { 
         "question": "How can we motivate Ole?",
@@ -50,8 +64,11 @@ let quizzes = [
     }
 ]
 
+shuffleArray(quizzes); // shuffle the questions
+
 let mainContEl = document.querySelector(".box-cont");
 quizzes.map((quiz, index) => {
+    shuffleArray(quiz.answers); // shuffle the answers
     let renderEl = `
         <div class="quiz-cont" id="question-${index}">
             <h2>${quiz.question}</h2>
@@ -100,7 +117,8 @@ function colorChosenAnswer(elementIDOrClass, mainElementIDOrClass) {
 function handleAnswerChoice(elementIDOrClass, mainElementIDOrClass) {
     let currentEl = document.querySelector("#question-" + mainElementIDOrClass);
     let nextEl = document.querySelector("#question-" + (parseInt(mainElementIDOrClass) + 1));
-    
+    let quizLen = quizzes.length;
+
     answeredQuestions++;
     colorChosenAnswer(elementIDOrClass, mainElementIDOrClass);
 
@@ -112,11 +130,24 @@ function handleAnswerChoice(elementIDOrClass, mainElementIDOrClass) {
             let scoreboardEl = document.getElementById("scoreboard");
             let scoreEl = document.getElementById("score");
 
-            scoreEl.innerHTML = `${score} / ${quizzes.length}`;
+            if (score == quizLen) {
+                toggleFireworks();
+
+                setTimeout(() => {
+                    toggleFireworks();
+                }, 6000);
+            }
+            scoreEl.innerHTML = `${score} / ${quizLen}`;
             scoreboardEl.setAttribute("style", "left: 50%;");
         }
     }, 2000);
 
+    // showFireworks()
+}
+
+function toggleFireworks() {
+    let fireworksEl = document.querySelector(".fireworks");
+    fireworksEl.classList.toggle("show");
 }
 
 function playAgain() {
