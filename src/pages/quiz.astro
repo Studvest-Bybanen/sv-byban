@@ -27,7 +27,6 @@
 </html>
 
 <script is:inline>
-
 let quizzes = [
     { 
         "question": "How can we motivate Ole?",
@@ -43,6 +42,11 @@ let quizzes = [
         "question": "How can we motivate Nick?",
         "answers": ["ice cream", "cappucino", "chocolates"],
         "correct": "cappucino"
+    },
+    { 
+        "question": "1 + 1?",
+        "answers": ["Magellan", "2", "11"],
+        "correct": "Magellan"
     }
 ]
 
@@ -58,9 +62,7 @@ quizzes.map((quiz, index) => {
             </ul>
         </div>
     `;
-    
 
-    // renderEl.classList.add('quiz-cont')
     mainContEl.innerHTML += renderEl;
 });
 
@@ -68,62 +70,58 @@ quizzes.map((quiz, index) => {
 let mainProgressContEl = document.querySelector(".progress-bar-ul");
 quizzes.map((quiz, index) => {
     let progressEl = `<li id="progress-${index}"></li>`
-
     mainProgressContEl.innerHTML += progressEl;
 })
 
+let score = 0;
+let answeredQuestions = 0;
 
-    let score = 0;
-    let answeredQuestions = 0;
+function checkCorrectAnswer(mainElementIDOrClass, elementIDOrClass, correctAnswer) {
+    let htmlElement = document.querySelector("#choice-" + mainElementIDOrClass + elementIDOrClass);
+    return htmlElement.innerHTML == correctAnswer;
+}
 
-    function checkCorrectAnswer(mainElementIDOrClass, elementIDOrClass, correctAnswer) {
-        let htmlElement = document.querySelector("#choice-" + mainElementIDOrClass + elementIDOrClass);
-        // console.log(htmlElement.innerHTML == correctAnswer)
-        return htmlElement.innerHTML == correctAnswer;
+function colorChosenAnswer(elementIDOrClass, mainElementIDOrClass) {
+    let correctAnswer = quizzes[mainElementIDOrClass].correct;
+    let isCorrect = checkCorrectAnswer(mainElementIDOrClass, elementIDOrClass, correctAnswer);
+    let choiceEl = document.querySelector("#choice-" + mainElementIDOrClass + elementIDOrClass);
+    let progressEl = document.querySelector("#progress-" + mainElementIDOrClass);
+    
+    if (isCorrect) {
+        score++;
+        progressEl.setAttribute("style", "background-color: green;");
+        choiceEl.setAttribute("style", "border: 2px solid green;");
+    } else {
+        progressEl.setAttribute("style", "background-color: red;");
+        choiceEl.setAttribute("style", "border: 2px solid red;");
     }
+}
 
-    function handleAnswerChoice(elementIDOrClass, mainElementIDOrClass) {
-        // mainElementIDOrClass = parseInt(mainElementIDOrClass);
-        let correctAnswer = quizzes[mainElementIDOrClass].correct;
-        let isCorrect = checkCorrectAnswer(mainElementIDOrClass, elementIDOrClass, correctAnswer);
-        let currentEl = document.querySelector("#question-" + mainElementIDOrClass);
-        let nextEl = document.querySelector("#question-" + (parseInt(mainElementIDOrClass) + 1));
-        // console.log("#question-" + (parseInt(mainElementIDOrClass) + 1))
-        let choiceEl = document.querySelector("#choice-" + mainElementIDOrClass + elementIDOrClass);
-        let progressEl = document.querySelector("#progress-" + mainElementIDOrClass);
-        
-        answeredQuestions++;
+function handleAnswerChoice(elementIDOrClass, mainElementIDOrClass) {
+    let currentEl = document.querySelector("#question-" + mainElementIDOrClass);
+    let nextEl = document.querySelector("#question-" + (parseInt(mainElementIDOrClass) + 1));
+    
+    answeredQuestions++;
+    colorChosenAnswer(elementIDOrClass, mainElementIDOrClass);
 
-        if (isCorrect) {
-            score++;
-            progressEl.setAttribute("style", "background-color: green;");
-            choiceEl.setAttribute("style", "border: 2px solid green;");
+    setTimeout(() => {
+        currentEl.setAttribute("style", "left: -100%;");
+        if (nextEl) {
+            nextEl.setAttribute("style", "left: 50%;");
         } else {
-            progressEl.setAttribute("style", "background-color: red;");
-            choiceEl.setAttribute("style", "border: 2px solid red;");
+            let scoreboardEl = document.getElementById("scoreboard");
+            let scoreEl = document.getElementById("score");
+
+            scoreEl.innerHTML = `${score} / ${quizzes.length}`;
+            scoreboardEl.setAttribute("style", "left: 50%;");
         }
+    }, 2000);
 
-        setTimeout(() => {
-            console.log(answeredQuestions)
-            // currentEl.setAttribute("style", "left: -100%;");
-            currentEl.setAttribute("style", "left: -100%;");
-            if (nextEl) {
-                nextEl.setAttribute("style", "left: 50%;");
-            } else {
-                // checkIsGameEnd();
-                let scoreboardEl = document.getElementById("scoreboard");
-                let scoreEl = document.getElementById("score");
+}
 
-                scoreEl.innerHTML = `${score} / ${quizzes.length}`;
-                scoreboardEl.setAttribute("style", "left: 50%;");
-            }
-        }, 2000);
-
-    }
-
-    function playAgain() {
-        location.reload();
-    }
+function playAgain() {
+    location.reload();
+}
 </script>
 <style is:inline>
 * {
