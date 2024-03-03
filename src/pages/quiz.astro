@@ -1,14 +1,4 @@
 ---
-// let quiz = [
-//     {
-//         questiopn: 2hjkashjakhfd,
-//         ansewrs {
-//             {}
-//         },
-//         correct
-//     }
-// ]
-
 ---
 
 <html lang="en">
@@ -17,43 +7,42 @@
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-	</head>
+        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="/styles/fireworks.css">
+    </head>
 	<body>
+        <div class="bg-cont">
+            <img class="bg-byban" src="../../svg/bybane.svg" alt="">
+        </div>
 		<div class="box-cont">
-            <div class="quiz-cont" id="question-1">
-                <h2>How can we motivate Ole?</h2>
-                <ul>
-                    <li>juice</li>
-                    <li>
-                        <button>
-                            meny fresh juice
-                        </button>
-                    </li>
-                    <li>pizza</li>
-                </ul>
+            <div class="quiz-cont" id="scoreboard">
+                <h2>Score</h2>
+                <span id="score"></span>
+                <button onclick="playAgain();">Play again!</button>
             </div>
-
-            <div class="quiz-cont" id="question-2">
-                <h2>How can we motivate Aggi?</h2>
-                <ul>
-                    <li>dsad</li>
-                    <li>fresh juice</li>
-                    <li>pizza</li>
-                </ul>
-            </div>
-
             <div class="progress-bar">
-                <ul>
-                    <li id="progress-1"></li>
-                    <li id="progress-2"></li>
+                <ul class="progress-bar-ul">
                 </ul>
             </div>
 		</div>
+
+        <div class="fireworks">
+            <div class="before"></div>
+            <div class="after"></div>
+        </div>
 	</body>
 
 </html>
 
-<script>
+<script is:inline>
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+    }
+    return array;
+}
+
 let quizzes = [
     { 
         "question": "How can we motivate Ole?",
@@ -69,50 +58,105 @@ let quizzes = [
         "question": "How can we motivate Nick?",
         "answers": ["ice cream", "cappucino", "chocolates"],
         "correct": "cappucino"
+    },
+    { 
+        "question": "1 + 1?",
+        "answers": ["Magellan", "2", "11"],
+        "correct": "Magellan"
     }
 ]
 
-quizzes.map(quiz => 
-    console.log(quiz)
-);
-    // console.log(quiz)
-    let question1 = document.getElementById("question-1");
-    let question2 = document.getElementById("question-2");
-    let progress1 = document.getElementById("progress-1");
-    let progress2 = document.getElementById("progress-2");
-    let ulEl = document.querySelector("li:nth-of-type(2)");
+shuffleArray(quizzes); // shuffle the questions
 
-    console.log(ulEl)
+let mainContEl = document.querySelector(".box-cont");
+quizzes.map((quiz, index) => {
+    shuffleArray(quiz.answers); // shuffle the answers
+    let renderEl = `
+        <div class="quiz-cont" id="question-${index}">
+            <h2>${quiz.question}</h2>
+            <ul>
+                ${quiz.answers.map((answer, answerIndex) => {
+                    return `<li id="choice-${index}${answerIndex}" onclick="handleAnswerChoice(${answerIndex}, ${index});">${answer}</li>`; // Added return statement here
+                }).join("")} <!-- Use join("") to convert the array to a string -->
+            </ul>
+        </div>
+    `;
 
-    ulEl?.addEventListener("click", ()=> {
-        ulEl!.setAttribute("style", "border: 2px solid green;");
-        progress1!.setAttribute("style", "background-color: green;");
+    mainContEl.innerHTML += renderEl;
+});
 
-        setTimeout(() => {
-            question1!.setAttribute("style", "left: -100%;");
-            question2!.setAttribute("style", "left: 50%;");
-        }, 2000);
-    })
+// render the progress bars
+let mainProgressContEl = document.querySelector(".progress-bar-ul");
+quizzes.map((quiz, index) => {
+    let progressEl = `<li id="progress-${index}"></li>`
+    mainProgressContEl.innerHTML += progressEl;
+})
 
-    ulEl?.addEventListener("click", ()=> {
-        ulEl!.setAttribute("style", "border: 2px solid green;");
-        progress1!.setAttribute("style", "background-color: green;");
+let score = 0;
+let answeredQuestions = 0;
 
-        setTimeout(() => {
-            question1!.setAttribute("style", "left: -100%;");
-            question2!.setAttribute("style", "left: 50%;");
-        }, 2000);
-    })
+function checkCorrectAnswer(mainElementIDOrClass, elementIDOrClass, correctAnswer) {
+    let htmlElement = document.querySelector("#choice-" + mainElementIDOrClass + elementIDOrClass);
+    return htmlElement.innerHTML == correctAnswer;
+}
+
+function colorChosenAnswer(elementIDOrClass, mainElementIDOrClass) {
+    let correctAnswer = quizzes[mainElementIDOrClass].correct;
+    let isCorrect = checkCorrectAnswer(mainElementIDOrClass, elementIDOrClass, correctAnswer);
+    let choiceEl = document.querySelector("#choice-" + mainElementIDOrClass + elementIDOrClass);
+    let progressEl = document.querySelector("#progress-" + mainElementIDOrClass);
     
+    if (isCorrect) {
+        score++;
+        progressEl.setAttribute("style", "background-color: green;");
+        choiceEl.setAttribute("style", "border: 2px solid green;");
+    } else {
+        progressEl.setAttribute("style", "background-color: red;");
+        choiceEl.setAttribute("style", "border: 2px solid red;");
+    }
+}
 
+function handleAnswerChoice(elementIDOrClass, mainElementIDOrClass) {
+    let currentEl = document.querySelector("#question-" + mainElementIDOrClass);
+    let nextEl = document.querySelector("#question-" + (parseInt(mainElementIDOrClass) + 1));
+    let quizLen = quizzes.length;
 
-// function correct() {
-//     let question2 = document.getElementById("question-2");
+    answeredQuestions++;
+    colorChosenAnswer(elementIDOrClass, mainElementIDOrClass);
 
-    
-// }
+    setTimeout(() => {
+        currentEl.setAttribute("style", "left: -100%;");
+        if (nextEl) {
+            nextEl.setAttribute("style", "left: 50%;");
+        } else {
+            let scoreboardEl = document.getElementById("scoreboard");
+            let scoreEl = document.getElementById("score");
+
+            if (score == quizLen) {
+                toggleFireworks();
+
+                setTimeout(() => {
+                    toggleFireworks();
+                }, 6000);
+            }
+            scoreEl.innerHTML = `${score} / ${quizLen}`;
+            scoreboardEl.setAttribute("style", "left: 50%;");
+        }
+    }, 2000);
+
+    // showFireworks()
+}
+
+function toggleFireworks() {
+    let fireworksEl = document.querySelector(".fireworks");
+    fireworksEl.classList.toggle("show");
+}
+
+function playAgain() {
+    location.reload();
+}
 </script>
-<style>
+<style is:inline>
 * {
     transition-duration: 1s;
 }
@@ -127,6 +171,10 @@ body {
 	/* background-color: black; */
 }
 
+.bg-cont {
+    position: absolute;
+    z-index: -10;
+}
 /* a {
 	color: white;
 	text-decoration: none;
@@ -141,38 +189,53 @@ div.box-cont {
 	position: relative;
 }
 
-div.quiz-cont {
+.quiz-cont {
+    height: 18rem;
+    width: 26.6rem;
     display: flex;
+    padding: 2rem 5rem 5rem 5rem;
     flex-direction: column;
-    /* align-items: center; */
-    border: 2px solid;
-    width: 70%;
-    margin: auto;
+    align-items: flex-start;
+    gap: 0.5rem;
+    border-radius: 1rem;
+    border: 1px solid #DCDBDB;
+    background: #FFF;
+    box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.25);
     position: absolute;
-    top: 40%;
+    top: 30%;
     left: 50%;
     transform: translateX(-50%);
-    padding-bottom: 2rem;
     h2 {
         padding-left: 2rem;
+    }
+
+    #quiz-score {
+        margin: auto;
+        font-size: 4rem;
     }
     ul {
         padding: 0;
         list-style-type: none;
         display: flex;
         flex-direction: column;
-        gap: 2rem;
+        gap: 1rem;
         margin: auto;
-        width: 70%;
+        width: 85%;
 
         li {
-            border: 2px solid rgba(0, 0, 0, 0.5);
-            padding: 0.5rem 1rem;
+            transition-duration: 0s;
+            background: #f1f1f1;
+            border: 0;
+            padding: 1rem 2rem;
+            border-radius: 2rem;
+            font-size: 1.25rem;
             cursor: pointer;
 
             button {
                 /* padding: 0.5rem 1rem; */
                 /* width: 100%; */
+
+                font-size: 1.25rem;
                 cursor: pointer;
                 border: 0;
                 background-color: transparent;
@@ -182,13 +245,18 @@ div.quiz-cont {
     }
 }
 
-div.quiz-cont:nth-of-type(2) {
+div.quiz-cont {
     left: 200%;
+}
+
+#question-0 {
+    left: 50%;
 }
 
 div.progress-bar {
     position: absolute;
-    top: 85%;
+    /* top: 97%; */
+    bottom: -5%;
     left: 50%;
     transform: translateX(-50%);
 
@@ -203,12 +271,32 @@ div.progress-bar {
             padding: 0.5rem 1rem; */
             height: 2rem;
             width: 2rem;
-            border: 2px solid rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.5);
             /* background-color: maroon; */
             /* background-color: yellow; */
             border-radius: 50%;
         }
 
+    }
+}
+
+div#scoreboard {
+    #score {
+        font-size: 3rem;
+        margin: auto;
+    }
+
+    button {
+        cursor: pointer;
+        width: 50%;
+        margin: 1rem auto 0 auto;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        background-color: maroon;
+        color: white;
+        border: 0;
+        border-radius: 20px;
+        font-size: 1.5rem;
     }
 }
 </style>
