@@ -10,18 +10,21 @@
         <link rel="stylesheet" href="/styles/fireworks.css">
     </head>
 	<body>
-        <div class="bybane-svg-container">
-            <img class="bybane-svg" src="../../svg/bybane-page3-background-v1.7.svg" alt="Cartoon tram moving at high speed">
-        </div>
-		<div class="box-cont">
-            <div class="quiz-cont" id="scoreboard">
-                <h2>Score</h2>
-                <span id="score"></span>
-                <button onclick="playAgain();">Play again!</button>
+        <header></header>
+        <main>
+            <div class="card-container">
+                <div class="box-cont">
+                    <div class="quiz-cont" id="scoreboard">
+                        <h2>Score</h2>
+                        <span id="score"></span>
+                        <button onclick="playAgain();">Play again!</button>
+                    </div>
+                    <div class="progress-bar">
+                        <ul class="progress-bar-ul">
+                        </ul>
+                </div>
             </div>
-            <div class="progress-bar">
-                <ul class="progress-bar-ul">
-                </ul>
+            <div class="fireworks">
             </div>
             
             <div id="bybane-svg-container">
@@ -489,11 +492,12 @@ function playAgain() {
 </script>
 
 <style is:inline>
-* {
-    transition-duration: 1s;
-}
+
+
+/* CSS Reset */
+
+
 body {
-	height: 100vh;
 	width: 100%;
 	display: flex;
 	align-items: center;
@@ -537,6 +541,9 @@ div.box-cont {
     top: 30%;
     left: 50%;
     transform: translateX(-50%);
+    transition: .3s ease-in-out 0s;
+
+
     h2 {
         padding-left: 2rem;
     }
