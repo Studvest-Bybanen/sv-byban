@@ -507,6 +507,116 @@ body {
 	/* background-color: black; */
 }
 
+/* BG Animation */
+
+#light-window,
+#light-window_2,
+#light-window_3,
+#light-window_4 {
+    animation: 5s linear infinite slide-window;
+}
+
+#light-grass {
+    animation: 10s linear infinite slide-window;
+}
+
+@keyframes slide-window {
+    0% {
+        transform: translateX(50%);
+    }
+    
+    100% {
+        transform: translateX(-80%);
+    }
+}
+
+#sun {
+    animation: circleScale 10s infinite ease-in-out;
+}
+
+@keyframes circleScale {
+    0% {
+        transform-origin: top center;
+        transform: scale(1);
+    }
+
+    50% {
+        transform-origin: top center;
+        transform: scale(.8);
+    }
+
+    100% {
+        transform-origin: top center;
+        transform: scale(1);
+    }
+}
+
+
+
+#bybane {
+    animation: 10s infinite reverse slide;
+}
+
+@keyframes slide {
+    0% {
+        transform: translateX(100%);
+    }
+
+    50% {
+        transform: translateX(-20%);
+      }
+    
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+#cloud-bg,
+#cloud-bg_2 {
+    transform-origin: 10% 10%;
+    animation: cloud 4s infinite alternate-reverse;
+}
+
+#cloud-bg_3 {
+    transform-origin: 5% 15%;
+    animation: cloud 3s infinite alternate-reverse;
+}
+
+#cloud-foreground {
+    transform-origin: 5% 15%;
+    animation: rotate 1.5s infinite alternate-reverse 0.5s;
+}
+
+#cloud-foreground_2 {
+    transform-origin: 5% 15%;
+    animation: rotate 1.5s infinite alternate-reverse 0s;
+}
+
+@keyframes cloud {
+    0% {
+        transform: translateX(2%);
+        
+    }
+    
+    100% {
+        transform: translateX(-2%);
+    }
+}
+
+@keyframes rotate {
+    0% {
+        transform: translateX(2%) rotate(-2deg);
+    }
+
+    100% {
+        transform: translateX(-2%) rotate(2deg);
+    }
+        
+}
+
+/* Styling */
+
+
 .bg-cont {
     position: absolute;
     z-index: -10;
