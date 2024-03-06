@@ -22,9 +22,12 @@
                     <div class="progress-bar">
                         <ul class="progress-bar-ul">
                         </ul>
+                    </div>
                 </div>
             </div>
             <div class="fireworks">
+                <div class="before"></div>
+                <div class="after"></div>
             </div>
             
             <div id="bybane-svg-container">
@@ -367,6 +370,84 @@
 </html>
 
 <script is:inline>
+
+const svgMountainZ3 = document.querySelectorAll('#mountain-z3-duplicate, #mountain-z3');
+
+let position1 = 0;
+const speed1 = .55; 
+
+function infiniteLoopSVG1() {
+    position1 -= speed1;
+    svgMountainZ3.forEach(svg => {
+    svg.style.transform = `translateX(${position1}%)`;
+    });
+    if (position1 <= -100) { //looping repeat position
+    position1 += 100; 
+    }
+    requestAnimationFrame(infiniteLoopSVG1);
+}
+
+infiniteLoopSVG1();
+
+
+const svgMountainZ2 = document.querySelectorAll('#mountain-z2-duplicate, #mountain-z2');
+
+let position2 = 0;
+const speed2 = .45; 
+
+function infiniteLoopSVG2() {
+    position2 -= speed2;
+    svgMountainZ2.forEach(svg => {
+    svg.style.transform = `translateX(${position2}%)`;
+    });
+    if (position2 <= -100) { //looping repeat position
+    position2 += 100; 
+    }
+    requestAnimationFrame(infiniteLoopSVG2);
+}
+
+infiniteLoopSVG2();
+
+
+const svgMountainZ0 = document.querySelectorAll('#mountain-z0-duplictate, #mountain-z0');
+
+let position = 0;
+const speed = .35; 
+
+function infiniteLoopSVG3() {
+    position -= speed;
+    svgMountainZ0.forEach(svg => {
+    svg.style.transform = `translateX(${position}%)`;
+    });
+    if (position <= -100) { //looping repeat position
+    position += 100; 
+    }
+    requestAnimationFrame(infiniteLoopSVG3);
+}
+
+infiniteLoopSVG3();
+
+
+const svgRail = document.querySelectorAll('#rail-foreground, #rail-foreground-duplicate');
+
+let position5 = 0;
+const speed5 = .55; 
+
+function infiniteLoopSVG4() {
+    position5 -= speed5;
+    svgRail.forEach(svg => {
+    svg.style.transform = `translateX(${position5}%)`;
+    });
+    if (position5 <= -100) { //looping repeat position
+    position5 += 100; 
+    }
+    requestAnimationFrame(infiniteLoopSVG4);
+}
+
+infiniteLoopSVG4();
+
+
+
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -487,6 +568,10 @@ function toggleFireworks() {
 function playAgain() {
     location.reload();
 }
+
+
+// Bg Animation 
+
 
 
 </script>
