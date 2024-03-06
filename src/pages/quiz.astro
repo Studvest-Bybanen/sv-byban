@@ -518,20 +518,33 @@ body {
 
 
 
-div.box-cont {
+.box-cont {
 	/* border: 2px solid black; */
 	width: 50%;
 	height: 80%;
 	position: relative;
+    z-index: 10;
+}
+
+.card-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+
 }
 
 .quiz-cont {
     height: 18rem;
-    width: 26.6rem;
+    width: clamp(10rem, 30vw, 26rem);
     display: flex;
     padding: 2rem 5rem 5rem 5rem;
     flex-direction: column;
     align-items: flex-start;
+    justify-content: center;
     gap: 0.5rem;
     border-radius: 1rem;
     border: 1px solid #DCDBDB;
