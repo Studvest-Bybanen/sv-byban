@@ -406,9 +406,159 @@ h1 {
 		background-position: 0% 50%;
 	}
 }
+/* Bybane */
+
+#bybane-svg-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -100;
+    margin: 0;
+    padding: 0;
 }
 
+#bybane-svg {
+    width: auto;
+    height: 100%;
 }
+
+.overlay{
+	height: 100vh;
+	width: 100%;
+	position: fixed;
+	background-color:rgba(22, 0, 82, 0.30);
+	pointer-events: none;
+	z-index: -1;
+}
+/* BG Animation */
+
+#light-window,
+#light-window_2,
+#light-window_3,
+#light-window_4 {
+    animation: 5s linear infinite slide-window;
+}
+
+#light-grass {
+    animation: 10s linear infinite slide-window;
+}
+
+@keyframes slide-window {
+    0% {
+        transform: translateX(50%);
+    }
+    
+    100% {
+        transform: translateX(-80%);
+    }
+}
+
+#sun {
+    animation: circleScale 10s infinite ease-in-out;
+}
+
+@keyframes circleScale {
+    0% {
+        transform-origin: top center;
+        transform: scale(1);
+    }
+
+    50% {
+        transform-origin: top center;
+        transform: scale(.8);
+    }
+
+    100% {
+        transform-origin: top center;
+        transform: scale(1);
+    }
+}
+
+
+
+#bybane {
+    animation: 10s infinite reverse slide;
+}
+
+@keyframes slide {
+    0% {
+        transform: translateX(100%);
+    }
+
+    50% {
+        transform: translateX(-20%);
+      }
+    
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+#cloud-bg,
+#cloud-bg_2 {
+    transform-origin: 10% 10%;
+    animation: cloud 4s infinite alternate-reverse;
+}
+
+#cloud-bg_3 {
+    transform-origin: 5% 15%;
+    animation: cloud 3s infinite alternate-reverse;
+}
+
+#cloud-foreground {
+    transform-origin: 5% 15%;
+    animation: rotate 1.5s infinite alternate-reverse 0.5s;
+}
+
+#cloud-foreground_2 {
+    transform-origin: 5% 15%;
+    animation: rotate 1.5s infinite alternate-reverse 0s;
+}
+
+@keyframes cloud {
+    0% {
+        transform: translateX(2%);
+        
+    }
+    
+    100% {
+        transform: translateX(-2%);
+    }
+}
+
+@keyframes rotate {
+    0% {
+        transform: translateX(2%) rotate(-2deg);
+    }
+
+    100% {
+        transform: translateX(-2%) rotate(2deg);
+    }
+        
+}
+
+/* BUTTON STYLES */
+.content-container {
+	height: 70%;
+	width:100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	align-items: center;
+	z-index: 1;
+}
+
+a {
+	display: block;
+	height: fit-content;
+	width: fit-content;
+	text-decoration: none;
+	color: #000;
+}
+
+
 	cursor: pointer;
 }
 
