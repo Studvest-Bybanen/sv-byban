@@ -559,7 +559,33 @@ a {
 }
 
 
+.onboard-btn {
 	cursor: pointer;
+	margin: 1rem;
+
+	display: flex;
+	width: clamp(18rem, 70vw, 35rem);
+	min-height: clamp(5rem, 70vw, 10rem);
+	justify-content: center;
+	align-items: center;
+	gap: 0.5rem;
+	/* flex-shrink: 0; */
+	border-radius: 2rem;
+	border: 5px solid #00010A;
+	background: #F24822;
+	box-shadow: -8px 8px 0px 0px rgba(22, 0, 82, 0.30);
+
+	font-family: "Inter", sans-serif;
+	font-size: clamp(1rem, 70vw, 3rem);
+	font-weight: 700;
+	text-transform:uppercase;
+
+	transition: .3s ease-in-out;
 }
+
+.onboard-btn:hover {
+	box-shadow: -1rem 1rem 0px 0px #00010A;
+}
+
 
 </style>
