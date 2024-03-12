@@ -486,7 +486,7 @@ quizzes.map((quiz, index) => {
     shuffleArray(quiz.answers); // shuffle the answers
     let renderEl = `
         <div class="quiz-cont" id="question-${index}">
-            <h2>${quiz.question}</h2>
+            <h3>${quiz.question}</h3>
             <ul>
                 ${quiz.answers.map((answer, answerIndex) => {
                     return `<li id="choice-${index}${answerIndex}" onclick="handleAnswerChoice(${answerIndex}, ${index});">${answer}</li>`; // Added return statement here
@@ -589,6 +589,13 @@ body {
 	padding: 0;
     overflow: hidden;
 }
+
+h3 {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
 
 /* Bybane */
 
@@ -722,11 +729,6 @@ body {
     position: absolute;
     z-index: -10;
 }
-/* a {
-	color: white;
-	text-decoration: none;
-} */
-
 
 
 .box-cont {
@@ -754,7 +756,6 @@ body {
     display: flex;
     padding: 2rem 5rem 5rem 5rem;
     flex-direction: column;
-    align-items: flex-start;
     justify-content: center;
     gap: 0.5rem;
     border-radius: 1rem;
@@ -769,7 +770,8 @@ body {
 
 
     h2 {
-        padding-left: 2rem;
+        text-align: center;
+        font-size: 3rem;
     }
 
     #quiz-score {
@@ -832,9 +834,9 @@ div.progress-bar {
         li {
             /* border: 2px solid rgba(0, 0, 0, 0.5);
             padding: 0.5rem 1rem; */
-            height: 2rem;
-            width: 2rem;
-            border: 2px solid rgba(255, 255, 255, 0.5);
+            height: 1rem;
+            width: 1rem;
+            border: 2px solid rgba(187, 177, 196, 0.5);
             /* background-color: maroon; */
             /* background-color: yellow; */
             border-radius: 50%;
@@ -851,15 +853,25 @@ div#scoreboard {
 
     button {
         cursor: pointer;
-        width: 50%;
-        margin: 1rem auto 0 auto;
-        padding-top: 1rem;
-        padding-bottom: 1rem;
-        background-color: maroon;
-        color: white;
-        border: 0;
-        border-radius: 20px;
-        font-size: 1.5rem;
+        padding: 1rem;
+
+        display: flex;
+        min-width: 10rem;
+        height: 5rem;
+        justify-content: center;
+        align-items: center;
+        /* flex-shrink: 0; */
+        border-radius: 2rem;
+        border: 5px solid #00010A;
+        background: #F24822;
+        box-shadow: -8px 8px 0px 0px rgba(22, 0, 82, 0.30);
+
+        font-family: "Inter", sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+        text-transform:uppercase;
+
+        transition: .3s ease-in-out;
     }
 }
 </style>
