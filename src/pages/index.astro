@@ -16,10 +16,8 @@
 	<body>
 		<div class="overlay"></div>
 		<div class="content-container">
-			
 			<div class="title-container">
 				<h1>Bybane Quiz</h1>
-				<span class="text-behind">Bybane Quiz</span>
 			</div>
 			<a href="/onboarding">
 				<div class="onboard-btn">
@@ -379,13 +377,16 @@ body {
 .title-container {
 	position: relative;
 	width: auto;
+	z-index: 10;
 }
 
 h1 {
 	font-family: 'Bungee';
-	font-size: clamp(8rem, 70vw, 15rem);
+	font-size: clamp(5rem, 10vw, 15rem);
+	text-align: center;
 	background: linear-gradient(to top, red, yellow);
 	background-size: 100% 100%;
+	line-height: 1;
 
 	animation: 1s ease infinite gradient;
 
@@ -408,6 +409,7 @@ h1 {
 		background-position: 0% 50%;
 	}
 }
+
 /* Bybane */
 
 #bybane-svg-container {
@@ -543,8 +545,10 @@ h1 {
 
 /* BUTTON STYLES */
 .content-container {
-	height: 70%;
+	height: 90%;
 	width:100%;
+	gap: 1rem;
+
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-end;
