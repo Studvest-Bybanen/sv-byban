@@ -8,6 +8,9 @@
 		<meta name="generator" content={Astro.generator} />
         <link rel="stylesheet" href="styles.css">
         <link rel="stylesheet" href="/styles/fireworks.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Bungee&display=swap" rel="stylesheet">
     </head>
 	<body>
         <header></header>
@@ -30,8 +33,16 @@
                 <div class="after"></div>
             </div>
             
+            <div class="title-container">
+				<h1 class="neste-stopp"></h1>
+			</div>
+
+            <div class="billett-kontroll">
+                <img src="/bilett-kontroll-lvl-1.svg" alt="billett-kontroll" />
+            </div>
+
             <div id="bybane-svg-container">
-                <svg id="bybane-svg" width="100%" height="auto" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg id="bybane-svg" width="" height="auto" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g id="bybane-page3-background-v1.7" clip-path="url(#clip0_42_9)">
                     <rect id="bg" y="0.802856" width="1920" height="1080" fill="#D2F5FA"/>
                     <g id="sun">
@@ -487,6 +498,12 @@ let quizzes = [
     }
 ]
 
+let bybaneStopp = [
+    "Fyllingsdalen terminal", "Kristianborg", "Mindemyren",
+    "Kronstad", "Haukeland sjukehus", "Fløen",
+    "Bystasjonen", "Nonneseter", "Kaigaten"
+]
+
 shuffleArray(quizzes); // shuffle the questions
 
 let mainContEl = document.querySelector(".box-cont");
@@ -526,14 +543,45 @@ function colorChosenAnswer(elementIDOrClass, mainElementIDOrClass) {
     let isCorrect = checkCorrectAnswer(mainElementIDOrClass, elementIDOrClass, correctAnswer);
     let choiceEl = document.querySelector("#choice-" + mainElementIDOrClass + elementIDOrClass);
     let progressEl = document.querySelector("#progress-" + mainElementIDOrClass);
-    
+    let bybaneEl = document.querySelector("#bybane");
+    let titleCont = document.querySelector(".title-container");
+    let nesteStopp = document.querySelector(".neste-stopp");
+    let billettKontroll = document.querySelector(".billett-kontroll");
+    bybaneEl.classList.remove("move-bybane");
+
     if (isCorrect) {
         score++;
+        bybaneEl.classList.add("move-bybane");
         progressEl.setAttribute("style", "background-color: green;");
         choiceEl.setAttribute("style", "border: 2px solid green;");
+
+        setTimeout(() => {  
+            titleCont.style = "display: block;"
+            nesteStopp.innerText = "Neste stopp: " + bybaneStopp[score-1];
+        }, 1000);
+
+        setTimeout(() => {
+            titleCont.style = "display: none;"
+        }, 4000);
+
+        setTimeout(() => {
+            bybaneEl.classList.remove("move-bybane");
+        }, 10000);
+
     } else {
+        billettKontroll.style = "right: 20%; transition-duration: 1s;";
         progressEl.setAttribute("style", "background-color: red;");
         choiceEl.setAttribute("style", "border: 2px solid red;");
+
+        setTimeout(() => {  
+            titleCont.style = "display: block;"
+            nesteStopp.innerText = "Billett kontroll!";
+        }, 1000);
+
+        setTimeout(() => {
+            billettKontroll.style = "right: -100%; transition-duration: 1s;";
+            titleCont.style = "display: none;"
+        }, 3000);
     }
 }
 
@@ -563,7 +611,7 @@ function handleAnswerChoice(elementIDOrClass, mainElementIDOrClass) {
             scoreEl.innerHTML = `${score} / ${quizLen}`;
             scoreboardEl.setAttribute("style", "left: 50%;");
         }
-    }, 2000);
+    }, 3000);
 
     // showFireworks()
 }
@@ -589,6 +637,16 @@ function playAgain() {
 
 /* CSS Reset */
 
+.billett-kontroll {
+    position: absolute;
+    right: -100%;
+    top: 25%;
+    z-index: 30;
+
+    img {
+        height: 300px;
+    }
+}
 
 body {
 	height: 100%;
@@ -604,6 +662,33 @@ h3 {
     font-weight: 700;
 }
 
+h1 {
+	font-family: 'Bungee';
+	font-size: clamp(3rem, 10vw, 3rem);
+	text-align: center;
+	background: linear-gradient(to top, red, yellow);
+	background-size: 100% 100%;
+	line-height: 1;
+
+	animation: 1s ease infinite gradient;
+
+	-webkit-text-stroke: 2px #000;
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+
+.title-container {
+	position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+	width: 100%;
+	z-index: 20;
+    /* transition-duration: 5s; */
+}
 
 /* Bybane */
 
@@ -621,6 +706,8 @@ h3 {
 #bybane-svg {
     width: auto;
     height: 100%;
+    position: absolute;
+    top: 0;
 }
 
 /* BG Animation */
@@ -669,21 +756,42 @@ h3 {
 
 
 
-#bybane {
-    animation: 10s infinite reverse slide;
+/* #bybane {
+    animation: 10s reverse slide;
+} */
+
+.move-bybane {
+    animation: 10s 1 reverse slide;
 }
 
 @keyframes slide {
     0% {
-        transform: translateX(100%);
+        transform: translateX(0%);
+        /* display: none; */
+    }
+
+    20% {
+        transform: translateX(-50%);
+    }
+    35% {
+        transform: translateX(-100%);
+    }
+
+    36% {
+        display: none;
+        transform: translateX(-100%);
+    }
+
+    49% {
+        display: none;
     }
 
     50% {
-        transform: translateX(-20%);
+        transform: translateX(100%);
       }
     
     100% {
-        transform: translateX(-100%);
+        transform: translateX(0%);
     }
 }
 
