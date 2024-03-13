@@ -374,13 +374,18 @@ function startGame() {
 	}, 1000);
 
 	setTimeout(() => {
-		startBtn.style = "margin: 3rem; width: clamp(18rem,70vw,35rem); min-height: clamp(5rem,70vw,13rem);"
+		startBtn.style = "background-color: #e7b416; margin: 3rem; width: clamp(18rem,70vw,35rem); min-height: clamp(5rem,70vw,13rem);"
 		startBtn.innerText = "set";
 	}, 2000);
 
 	setTimeout(() => {
-		startBtn.style = "margin: 5rem -100rem 5rem 100rem; transition-duration: 1s;";
+		startBtn.style = "background-color: green; margin: 3rem;";
 		startBtn.innerText = "go";
+	}, 2500);
+
+	setTimeout(() => {
+		startBtn.style = "margin: 5rem -100rem 5rem 100rem; transition-duration: 2s; transition-delay: 1s;";
+		startBtn.innerText = "GO!";
 	}, 3000);
 
 	setTimeout(() => {
