@@ -370,7 +370,7 @@
 </html>
 
 <script is:inline>
-
+let runAnimation = true;
 const svgMountainZ3 = document.querySelectorAll('#mountain-z3-duplicate, #mountain-z3');
 
 let position1 = 0;
@@ -384,16 +384,16 @@ function infiniteLoopSVG1() {
     if (position1 <= -100) { //looping repeat position
     position1 += 100; 
     }
-    requestAnimationFrame(infiniteLoopSVG1);
+    // while (runAnimation) {
+    //     requestAnimationFrame(infiniteLoopSVG1);
+    // }
 }
-
-infiniteLoopSVG1();
 
 
 const svgMountainZ2 = document.querySelectorAll('#mountain-z2-duplicate, #mountain-z2');
 
 let position2 = 0;
-const speed2 = .45; 
+const speed2 = .25; 
 
 function infiniteLoopSVG2() {
     position2 -= speed2;
@@ -403,10 +403,10 @@ function infiniteLoopSVG2() {
     if (position2 <= -100) { //looping repeat position
     position2 += 100; 
     }
-    requestAnimationFrame(infiniteLoopSVG2);
+    // while (runAnimation) {
+    //     requestAnimationFrame(infiniteLoopSVG2);
+    // }
 }
-
-infiniteLoopSVG2();
 
 
 const svgMountainZ0 = document.querySelectorAll('#mountain-z0-duplictate, #mountain-z0');
@@ -422,16 +422,16 @@ function infiniteLoopSVG3() {
     if (position <= -100) { //looping repeat position
     position += 100; 
     }
-    requestAnimationFrame(infiniteLoopSVG3);
+    // while (runAnimation) {
+    //     requestAnimationFrame(infiniteLoopSVG3);
+    // }
 }
-
-infiniteLoopSVG3();
 
 
 const svgRail = document.querySelectorAll('#rail-foreground, #rail-foreground-duplicate');
 
 let position5 = 0;
-const speed5 = .55; 
+const speed5 = .20; 
 
 function infiniteLoopSVG4() {
     position5 -= speed5;
@@ -441,10 +441,18 @@ function infiniteLoopSVG4() {
     if (position5 <= -100) { //looping repeat position
     position5 += 100; 
     }
-    requestAnimationFrame(infiniteLoopSVG4);
+    
+    // requestAnimationFrame(infiniteLoopSVG4);
 }
 
-infiniteLoopSVG4();
+// infiniteLoopSVG1();
+// infiniteLoopSVG2();
+// infiniteLoopSVG3();
+// infiniteLoopSVG4();
+
+// setTimeout(() => {
+//     runAnimation = false;
+// }, 3000);
 
 
 
@@ -625,7 +633,7 @@ h3 {
 }
 
 #light-grass {
-    animation: 10s linear infinite slide-window;
+    animation: 10s linear 3s slide-window;
 }
 
 @keyframes slide-window {
@@ -697,7 +705,7 @@ h3 {
 
 #cloud-foreground_2 {
     transform-origin: 5% 15%;
-    animation: rotate 1.5s infinite alternate-reverse 0s;
+    animation: rotate 3s infinite alternate-reverse 0s;
 }
 
 @keyframes cloud {
@@ -848,7 +856,7 @@ div.progress-bar {
 div#scoreboard {
     #score {
         font-size: 3rem;
-        margin: auto;
+        margin: -1rem auto 2rem auto;
     }
 
     button {

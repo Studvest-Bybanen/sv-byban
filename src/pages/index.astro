@@ -19,11 +19,9 @@
 			<div class="title-container">
 				<h1>Bybane Quiz</h1>
 			</div>
-			<a href="/onboarding">
-				<div class="onboard-btn">
-					start
-				</div>
-			</a>
+			<button class="onboard-btn" onclick="startGame();">
+				start
+			</button>
 		</div>
 		<div id="bybane-svg-container">
 			<svg id="bybane-svg" width="100%" height="auto" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -362,7 +360,38 @@
 	</body>
 
 </html>
-<script>
+<script is:inline>
+let bybaneTitle = document.querySelector(".title-container");
+let startBtn = document.querySelector(".onboard-btn");
+
+function startGame() {
+	bybaneTitle.style = "margin: 100% 0%; transition-duration: 2s;";
+	
+	setTimeout(() => {
+		bybaneTitle.style = "display: none;";
+		startBtn.style = "margin: 5rem; transition-duration: 1s;";
+		startBtn.innerText = "ready";
+	}, 1000);
+
+	setTimeout(() => {
+		startBtn.style = "margin: 3rem; width: clamp(18rem,70vw,35rem); min-height: clamp(5rem,70vw,13rem);"
+		startBtn.innerText = "set";
+	}, 2000);
+
+	setTimeout(() => {
+		startBtn.style = "margin: 5rem -100rem 5rem 100rem; transition-duration: 1s;";
+		startBtn.innerText = "go";
+	}, 3000);
+
+	setTimeout(() => {
+		location.href = "/quiz";
+	}, 6000);
+	// setTimeout(() => {
+	// 	// bybaneTitle.style = "display: none;";
+	// 	startBtn.style = "margin: auto; transition-duration: 1s;";
+	// }, 500);
+}
+
 </script>
 <style>
 
@@ -544,6 +573,10 @@ h1 {
 }
 
 /* BUTTON STYLES */
+button {
+	background: transparent;
+	border: 0;
+}
 .content-container {
 	height: 90%;
 	width:100%;
